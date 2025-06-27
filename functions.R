@@ -42,7 +42,7 @@ moore_function <- function(x, c) {
 }
 
 
-#General function to study multiple iteretions on the same network
+#General function to study multiple iterations on the same network
 
 multiple_run_row <- function(network, fun, realizations, timesteps, alpha, r, study_lcc = FALSE) {
 
