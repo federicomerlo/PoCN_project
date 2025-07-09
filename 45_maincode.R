@@ -75,8 +75,14 @@ V(g)$name <- as.character(V(g)$name)
 #                                                  'S' (the value of the size of the LCC for the chosen alphas)
 
 
-
+#
+#
+#
 # Single study
+#
+#
+#
+
 study <- overload(
   g = g,
   alpha_min = 0.1,
@@ -100,7 +106,14 @@ ggplot(study, aes(x = alpha, y = S)) +
 #ggsave("lcc_study.png", width = 10, height = 8, dpi = 300)
 
 
+
+#
+#
+#
 # Study over multiple run (exclusively for 'rand')
+#
+#
+#
 
 study <- multiple(
   g = g,
