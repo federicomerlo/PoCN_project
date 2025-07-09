@@ -57,14 +57,32 @@ edges <- read.csv("edges.csv")
 
 
 
-# Single study
 
+colnames(edges) <- c("from", "to")
+colnames(nodes)[1] <- "id"
+
+g <- graph_from_data_frame(d = edges, vertices = nodes, directed = FALSE)
+
+V(g)$name <- as.character(V(g)$name)
+
+
+
+# Function overload -> input: network, alpha_min, alpha_max, alpha_step, modmod
+#                             (modmod can be: 'rand' to begin with random failure
+#                                             'deg' to begin with a degree based attack
+#                                             'betw' to begin with a betweenness centrality based attack)
+#                   -> output: dataframe with column: 'alpha' (the sequence of alpha over which the study is done)
+#                                                     'S' (the value of the size of the LCC for the chosen alphas)
+
+
+
+# Single study
 study <- overload(
   g = g,
   alpha_min = 0.1,
   alpha_max = 1.0,
   alpha_step = 0.1,
-  modmod = "deg"
+  modmod = "rand"             #possible "rand", "deg", "betw"
 )
 
 # Plot S over alpha
@@ -79,10 +97,33 @@ ggplot(study, aes(x = alpha, y = S)) +
   theme_bw(base_size = 14)
 
 # Save the plot to a PNG file
-#ggsave("DE_lcc_betw.png", width = 10, height = 8, dpi = 300)
+#ggsave("lcc_study.png", width = 10, height = 8, dpi = 300)
 
 
+# Study over multiple run (exclusively for 'rand')
 
+study <- multiple(
+  g = g,
+  alpha_min = 0.1,
+  alpha_max = 1.0,
+  alpha_step = 0.1,
+  iterations = 2
+)
+
+
+ggplot(study, aes(x = alpha, y = S)) +
+  geom_ribbon(aes(ymin = S - S_sd, ymax = S + S_sd), fill = "steelblue", alpha = 0.3) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 2) +
+  labs(
+    title = "Network Robustness Under Overload",
+    x = expression(alpha),
+    y = "Mean Size of Largest Connected Component (S)"
+  ) +
+  theme_bw(base_size = 14)
+
+# Save the plot to a PNG file
+#ggsave("lcc_study_rand_multiple.png", width = 10, height = 8, dpi = 300)
 
 
 
