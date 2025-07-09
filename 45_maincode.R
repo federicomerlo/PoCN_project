@@ -67,12 +67,12 @@ V(g)$name <- as.character(V(g)$name)
 
 
 
-# Function overload -> input: network, alpha_min, alpha_max, alpha_step, modmod
-#                             (modmod can be: 'rand' to begin with random failure
-#                                             'deg' to begin with a degree based attack
-#                                             'betw' to begin with a betweenness centrality based attack)
-#                   -> output: dataframe with column: 'alpha' (the sequence of alpha over which the study is done)
-#                                                     'S' (the value of the size of the LCC for the chosen alphas)
+# NOTE: overload -> input: network, alpha_min, alpha_max, alpha_step, modmod
+#                          (modmod can be: 'rand' to begin with random failure
+#                                          'deg' to begin with a degree based attack
+#                                          'betw' to begin with a betweenness centrality based attack)
+#                -> output: dataframe with column: 'alpha' (the sequence of alpha over which the study is done)
+#                                                  'S' (the value of the size of the LCC for the chosen alphas)
 
 
 
