@@ -1,0 +1,82 @@
+% used packages in the template
+% import your package here 
+\usepackage[utf8]{inputenc}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{subfigure}
+%
+%code from https://tex.stackexchange.com/questions/120716/appendix-after-each-chapter
+\usepackage{appendix}
+\AtBeginEnvironment{subappendices}{%
+\chapter*{SOLUZIONI}
+\addcontentsline{toc}{chapter}{Soluzioni}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+}
+
+\usepackage{lipsum}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage[bookmarks,breaklinks,colorlinks=true,allcolors=blue]{hyperref}
+\usepackage{listings}
+\usepackage{inconsolata}
+\usepackage{float}
+\usepackage{eso-pic}
+\usepackage[framemethod=tikz]{mdframed}
+
+\usepackage[square,numbers]{natbib}
+\AtBeginDocument{
+  \renewcommand{\bibsection}{\chapter{\bibname}}
+} % Bibliography in numbered chapter
+
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{parskip}
+\usepackage[official]{eurosym}
+\setlength {\marginparwidth }{2cm} 
+\usepackage{todonotes}
+\usepackage{csquotes}
+
+\usepackage{rotating}
+\usepackage{lmodern}
+\usepackage{setspace}
+
+\usepackage{enumitem}
+\usepackage{wrapfig}
+
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{soul}
+
+\usepackage{ifthen}
+\newboolean{firstanswerofthechapter}  
+\usepackage{chngcntr}
+\usepackage{stackengine}
+
+\usepackage{tasks}
+\newlength{\longestlabel}
+\settowidth{\longestlabel}{\bfseries viii.}
+\settasks{label=\roman*., label-format={\bfseries}, label-width=\longestlabel,
+item-indent=0pt, label-offset=2pt, column-sep={10pt}}
+
+\colorlet{lightcyan}{cyan!40!white}
+
+% code from https://tex.stackexchange.com/questions/369265/math-book-how-to-write-exercise-and-answers
+\usepackage[lastexercise,answerdelayed]{exercise}
+\counterwithin{Exercise}{section}
+\counterwithin{Answer}{section}
+\renewcounter{Exercise}[section]
+\newcommand{\QuestionNB}{\bfseries\arabic{Question}.\ }
+\renewcommand{\ExerciseName}{EXERCISES}
+%\renewcommand{\ExerciseHeader}{\noindent\def\stackalignment{l}% code from https://tex.stackexchange.com/a/195118/101651
+%    \stackunder[0pt]{\colorbox{unipd}{\textcolor{white}{\textbf{\LARGE\ExerciseHeaderNB\;\large\ExerciseName}}}}{\textcolor{unipd}{\rule{\linewidth}{2pt}}}\medskip}
+\renewcommand{\ExerciseHeader}{\,}
+\renewcommand{\AnswerName}{Exercises}
+\renewcommand{\AnswerHeader}{\ifthenelse{\boolean{firstanswerofthechapter}}%
+    {\bigskip\noindent\textcolor{unipd}{\textbf{CAPITOLO \thechapter}}\newline\newline%
+        \noindent\bfseries\emph{\textcolor{unipd}{\AnswerName\ \ExerciseHeaderNB, pag. %
+                \pageref{\AnswerRef}}}\smallskip}
+    {\noindent\bfseries\textcolor{unipd}{Problema\ \ExerciseHeaderNB, pag. \pageref{\AnswerRef}}\smallskip}}
+\setlength{\QuestionIndent}{16pt}
