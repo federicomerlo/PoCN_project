@@ -1,0 +1,42 @@
+\documentclass[12pt]{report}
+% LaTeX packages and global styles
+\input{base/packages}
+
+\input{base/style}
+
+% Beginning of the document
+\begin{document}
+    % Title page and unnumbered sections
+    \input{sections/front_page}
+    %\input{sections/abstract}
+    
+    % Index of the document and figures
+    \begingroup
+        % Links are normally blue, but indexes are set to black
+        % so that everything does not appear blue
+        \hypersetup{linkcolor=black}
+        \tableofcontents
+        %\listoffigures % uncomment to display list of code 
+        %\lstlistoflistings % uncomment to display list of code 
+        %\listof{example}{Lista degli esempi}
+        %check https://tex.stackexchange.com/questions/16494/generating-lists-of-custom-environment
+    \endgroup
+    
+    % Change page number style to normal
+    \clearpage\pagenumbering{arabic}
+    
+    % Sections and chapters
+\titleformat{\section}[hang]{\large\bfseries}{\textcolor{unipd}{\thesection}\hsp\textcolor{gray75}{|}\hsp}{0pt}{\large\bfseries\textcolor{gray25}}[\color{unipd}{\titlerule[1.0pt]}]
+
+    \input{sections/task1.tex}
+
+
+        
+%\titleformat{\section}[hang]{\large\bfseries}{\textcolor{unipd}{Problema~\thesection}\hsp\textcolor{gray75}{|}\hsp}{0pt}{\large\bfseries\textcolor{gray25}}[\color{unipd}{\titlerule[1.0pt]}]
+    
+    % Bibliography 
+    \bibliographystyle{plainnat}
+    \bibliography{bib_p45.bib}
+
+% End of the document
+\end{document}
