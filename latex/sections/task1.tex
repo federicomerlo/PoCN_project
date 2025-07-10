@@ -1,0 +1,80 @@
+\chapter{Theoretical Approach}
+
+\resp{Merlo Federico}
+
+We study networks as idealizations of real world complex systems. Therefore it is essential to count for as many real features as possible in our models. A noticeable characteristic of these complex systems is that many times they evolve both creating and loosing connections and links. In this brief analysis we study the so called Growth-Shrink Models to describe these phenomena.
+Fist let us introduce the theoretical description needed. We will follow two different approaches to describe these underlying features. 
+
+\section{Artime's approach}
+
+In this section we will follow the article \cite{artime2022stochastic}.
+In this view we introduce an undirected unweighted simple network of N nodes. This parameter will be kept fixed. We then consider an evolution of the network done by fixed time steps. For each time step we will consider two phenomena:
+\begin{itemize}
+    \item Addition of $\alpha_a N / 2$ edges between two nodes picked uniformly at random.
+    \item Resetting of $r_a N$ nodes picked uniformly at random. This means the deletion of all edges of the chosen nodes.
+\end{itemize}
+In general we could apply this model to any kind of network but for simplicity we start from a graph with no edges. We can set the degree distribution as $p_{k}(t=0)= \delta_{k,0}$ at time zero. This distribution is associated with the following master equation \eqref{ME_a}.
+
+\begin{equation}
+\frac{dp_{k}}{dt} = \alpha_a p_{k-1} - \alpha_a p_{k} - rp_{k}+ r_a (k+1)p_{k+1} - r_a kp_{k} + r_a \delta_{k,0} \label{ME_a}
+\end{equation}
+
+In equation \eqref{ME_a} the first term describe the addition of an edge in nodes that had degree k-1; the second and third describe the loss of nodes with degree k due to the addition of an edge to nodes that already had degree k and due to the resetting of other nodes with degree k; the fourth is the gain of nodes with degree k due to the loss of an edge suffered by nodes with degree k+1; the fifth, again, a loss due to the removal of a neighbor of nodes with degree k; and lastly the delta encodes for the nodes left with no links.
+
+From equation \eqref{ME_a}, using the generating function $g(z,t)=\Sigma_{k=0}^{\infty}z^k p_k (t)$, we obtain the PDE \eqref{PDE_a}.
+
+\begin{equation}
+\frac{\partial{p_{k}}}{\partial{t}} = [ \alpha_a z - (\alpha_a + r_a) ]g + r_a (1-z)\frac{\partial{g}}{\partial{z}} + r_a \label{PDE_a}
+\end{equation}
+
+Fixing the conditions $g(1,t)=1$ and $g(z,0)=1$ and using the method of the characteristics, we can solve this PDE and, from it, derive the degree distribution \eqref{deg_a}.
+
+\begin{equation}
+p_k(t) = \frac{r_a}{\alpha_a}[1-Q(k+1,c(t))] + \frac{c(t)^k}{k!}e^{-c(t)-r_at} \label{deg_a}
+\end{equation}
+
+\begin{equation}
+Q(a,b)=\frac{1}{\Gamma(a)} \int_{b}^{\infty}{x^{a-1}e^{-x}dx} \notag
+\end{equation}
+
+\begin{equation}
+c(t)=\frac{\alpha_a}{r_a} (1-e^{-r_at})\notag
+\end{equation}
+
+We can also compute the steady mean degree, which reads $<k>=\alpha_a/(2r_a)$.
+
+\section{Moore's approach}
+
+The second approach taken in consideration is the one described by the article \cite{moore2006exact}. We will force this method to be as much coherent to the previous one as possible.
+
+First, let us take an undirected unweighted simple network of N nodes. In this case we do not fix immediately the number of nodes, that could in general change in time. We then consider again an evolution of the network done by fixed time steps. For each time step we will consider two phenomena:
+\begin{itemize}
+    \item Addition of 1 node to the network. This nodes form immediately $\alpha_m$ links with $\alpha_m$ different existing nodes, picked uniformly at random.
+    \item Removal of $r_m$ nodes, picked uniformly at random, from the network.
+\end{itemize}
+
+Notice that the first point could include the case of a so called preferential attachment in which the probability of a new node to form a link with a given existing node can be modulated by, for example, its degree. For simplicity, and to be more coherent with the previous case, we consider uniform attachment. To conform to the Artime's approach, we want N to be fixed in time. To do so we simply set $r_m$ to 1. 
+
+Following Moore's study, we can then write the update equation \eqref{UD_m}.
+
+\begin{equation}
+N p'_k = N p_k + \alpha_m p_{k-1} - \alpha_m p_k - p_k + (k+1)p_{k+1} - kp_k + \delta_{k,\alpha_m}  \label{UD_m}
+\end{equation}
+
+In equation \eqref{UD_m} we study the number of nodes with degree k at the next time step $Np'_k$. In it, the first term takes into account the number of nodes with degree k at the previous time; the middle terms can be compared to the first five terms in the Artime's study and, lastly, the delta encodes for the new nodes, entering with degree $\alpha_m$.
+
+Again, using the generating function $g(z,t)=\Sigma_{k=0}^{\infty}z^k p_k (t)$, and studying directly the asymptotic behaviour ($p'_k=p_k$), we can obtain the final, time independent degree distribution \eqref{deg_m1}, \eqref{deg_m2}.
+
+\begin{equation}
+p_k = \frac{e^{\alpha_m}}{\alpha_m^{\alpha_m+1}}[\Gamma(\alpha_m+1) - \Gamma(\alpha_m+1,\alpha_m)]\frac{\Gamma(k+1,\alpha_m)}{\Gamma(k+1)}, \;\;\;\text{ if }\;\; k<\alpha_m\label{deg_m1}
+\end{equation}
+
+\begin{equation}
+p_k = \frac{e^{\alpha_m}}{\alpha_m^{\alpha_m+1}}[\Gamma(k+1) - \Gamma(k+1,\alpha_m)]\frac{\Gamma(\alpha_m+1,\alpha_m)}{\Gamma(k+1)}, \;\;\;\text{ if }\;\; k\geq \alpha_m\label{deg_m2}
+\end{equation}
+
+To uniform the two strategies we will also take a network with no edges at time zero. Notice that this model differs from the prior one mainly for the method of adding new links. On one hand, we randomly add edges while resetting some nodes. On the other hand, we could imagine to reset a node and then to give it the new edges. In other words, only the reset nodes receive all $\alpha_m$ new links. To be coherent, and add the same amount of edges, we will set $\alpha_m = \alpha_a N/2$. Also, since $r_m$ is fixed to one we will use $r_a=1/N$.
+
+Even for this model we can compute the steady mean degree, which reads $\;\;$ $<k>=\alpha_m$.
+
+\newpage
